@@ -111,7 +111,7 @@ Content-Type: application/json
 1. Clone the repository:
 ```bash
 git clone https://github.com/nezuko0825/-payment_service.git
-cd payment-service
+cd -payment_service
 ```
 
 2. Install dependencies:
