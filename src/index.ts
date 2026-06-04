@@ -32,8 +32,8 @@ const connectToDatabase = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/payment-service');
     console.log('Connected to MongoDB');
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
+  } catch (error: any) {
+    console.error('❌ MongoDB connection error:', error?.message || error);
     console.error('💡 Please ensure MongoDB is running or update MONGODB_URI in .env file');
     console.error('📋 Run one of these commands to start MongoDB:');
     console.error('   - Using Docker: docker run -d -p 27017:27017 mongo');
@@ -53,8 +53,8 @@ const connectToRedis = async () => {
   try {
     await redisClient.connect();
     console.log('Connected to Redis');
-  } catch (error) {
-    console.error('❌ Redis connection error:', error.message);
+  } catch (error: any) {
+    console.error('❌ Redis connection error:', error?.message || error);
     console.error('💡 Please ensure Redis is running or update REDIS_URL in .env file');
     console.error('📋 Run one of these commands to start Redis:');
     console.error('   - Using Docker: docker run -d -p 6379:6379 redis');

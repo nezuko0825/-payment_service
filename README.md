@@ -102,16 +102,34 @@ Content-Type: application/json
 ## Installation
 
 ### Prerequisites
-- Node.js 16+
-- MongoDB 4.4+
-- Redis 6+
+- **Node.js 16+** - [Download Node.js](https://nodejs.org/)
+- **MongoDB 4.4+** (optional for development) - OR use Docker: `docker run -d -p 27017:27017 mongo`
+- **Redis 6+** (optional for development) - OR use Docker: `docker run -d -p 6379:6379 redis`
 
-### Setup
+### Quick Setup with Docker (Recommended)
+
+If you have Docker installed, this is the easiest way:
+
+```bash
+# Start MongoDB and Redis with Docker
+docker run -d -p 27017:27017 --name mongodb-payment mongo
+docker run -d -p 6379:6379 --name redis-payment redis
+
+# Or use Docker Compose (starts both services)
+docker-compose up -d
+
+# Then setup the application
+npm install
+cp .env.example .env
+npm run dev
+```
+
+### Manual Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/nezuko0825/-payment_service.git
-cd -payment_service
+git clone <repository-url>
+cd payment-service
 ```
 
 2. Install dependencies:
@@ -127,23 +145,50 @@ cp .env.example .env
 4. Update `.env` with your configuration:
 ```env
 PORT=3000
-MONGODB_URI=mongodb://localhost:27017/payment-service
-REDIS_URL=redis://localhost:6379
+MONGODB_URI=mongodb://localhost:27017/payment-service  # Update if MongoDB is not on localhost
+REDIS_URL=redis://localhost:6379                       # Update if Redis is not on localhost
 SECRET_KEY=your-secret-key-for-hmac-signatures
 WEBHOOK_TIMEOUT=300000
 MAX_TIMESTAMP_DIFF=300000
 ```
 
-5. Start development server:
+5. **Important**: Make sure MongoDB and Redis are running:
+   - **MongoDB**: Run `mongod` or start MongoDB service
+   - **Redis**: Run `redis-server` or start Redis service
+
+6. Start development server:
 ```bash
 npm run dev
 ```
 
-Or build and start production server:
+### Development Without Databases
+
+For quick testing without installing databases:
+
+1. **Run tests only** (tests use in-memory/mock databases):
 ```bash
-npm run build
-npm start
+npm test
 ```
+
+2. **Use Docker Compose** (starts everything automatically):
+```bash
+docker-compose up
+```
+
+3. **Check the demo script** for API examples:
+```bash
+node demo.js
+```
+
+### Troubleshooting Connection Errors
+
+If you see connection errors when running `npm run dev`:
+
+1. **MongoDB not running**: Start MongoDB or use Docker
+2. **Redis not running**: Start Redis or use Docker  
+3. **Use different connection strings**: Update `.env` file
+4. **Run tests instead**: `npm test` works without databases
+5. **Check the error messages**: The app provides helpful instructions
 
 ## Running Tests
 
