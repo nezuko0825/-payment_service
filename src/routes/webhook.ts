@@ -146,7 +146,7 @@ router.post('/simulate', async (req: Request, res: Response) => {
       redisClient
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: 'Webhook simulated successfully',
       data: {
@@ -160,13 +160,13 @@ router.post('/simulate', async (req: Request, res: Response) => {
     });
   } catch (error) {
     if (error instanceof AppError) {
-      res.status(error.statusCode).json({
+      return res.status(error.statusCode).json({
         success: false,
         error: error.message
       });
     } else {
       console.error('Webhook simulation error:', error);
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         error: 'Failed to simulate webhook'
       });

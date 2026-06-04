@@ -152,8 +152,18 @@ export class InvoiceService {
         return result;
       }
 
-      // Update invoice status
+      // Update invoice status with timestamps
       invoice.status = status;
+      
+      // Set appropriate timestamps based on status
+      if (status === 'paid') {
+        invoice.paidAt = new Date();
+        invoice.failedAt = undefined;
+      } else if (status === 'failed') {
+        invoice.failedAt = new Date();
+        invoice.paidAt = undefined;
+      }
+      
       await invoice.save();
 
       const result = {

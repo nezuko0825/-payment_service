@@ -80,24 +80,6 @@ const invoiceSchema = new Schema<IInvoice>({
   timestamps: true
 });
 
-// Calculate derived fields before saving
-invoiceSchema.pre('save', function(next) {
-  // Calculate fee amount and amount to receive
-  this.feeAmount = Number((this.amount * this.feePercent / 100).toFixed(2));
-  this.amountToReceive = Number((this.amount - this.feeAmount).toFixed(2));
-  
-  // Update timestamps based on status
-  if (this.status === 'paid' && this.isModified('status')) {
-    this.paidAt = new Date();
-    this.failedAt = undefined;
-  } else if (this.status === 'failed' && this.isModified('status')) {
-    this.failedAt = new Date();
-    this.paidAt = undefined;
-  }
-  
-  return next();
-});
-
 // Compound index for efficient queries
 invoiceSchema.index({ merchantId: 1, createdAt: -1 });
 invoiceSchema.index({ status: 1, createdAt: -1 });
