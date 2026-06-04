@@ -35,10 +35,9 @@ const connectToDatabase = async () => {
   } catch (error: any) {
     console.error('❌ MongoDB connection error:', error?.message || error);
     console.error('💡 Please ensure MongoDB is running or update MONGODB_URI in .env file');
-    console.error('📋 Run one of these commands to start MongoDB:');
-    console.error('   - Using Docker: docker run -d -p 27017:27017 mongo');
-    console.error('   - Using MongoDB Compass: Download and install from https://www.mongodb.com/products/compass');
-    console.error('   - Or update .env with a different MongoDB connection string');
+    console.error('📋 Install MongoDB from: https://www.mongodb.com/try/download/community');
+    console.error('   Then start MongoDB with: mongod');
+    console.error('   Or update .env with a different MongoDB connection string');
     process.exit(1);
   }
 };
@@ -56,10 +55,9 @@ const connectToRedis = async () => {
   } catch (error: any) {
     console.error('❌ Redis connection error:', error?.message || error);
     console.error('💡 Please ensure Redis is running or update REDIS_URL in .env file');
-    console.error('📋 Run one of these commands to start Redis:');
-    console.error('   - Using Docker: docker run -d -p 6379:6379 redis');
-    console.error('   - On Windows: Download Redis from https://redis.io/docs/getting-started/installation/install-redis-on-windows/');
-    console.error('   - Or update .env with a different Redis connection string');
+    console.error('📋 Install Redis from: https://redis.io/download/');
+    console.error('   Then start Redis with: redis-server');
+    console.error('   Or update .env with a different Redis connection string');
     throw error;
   }
   
