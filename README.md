@@ -311,6 +311,3 @@ npm run test:watch
 - **Admin Dashboard**: Add admin interface for invoice management
 - **Multiple Environments**: Separate configs for dev/staging/prod
 
-## License
-
-MIT
